@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    public Vector3 direction;
-	Rigidbody rb;
+	public float gravity;
+	public Vector3 fallVelocity;
+	CharacterController controller;
 
 	private void Awake()
 	{
-		rb = GetComponent<Rigidbody>();
+		controller = GetComponent<CharacterController>();
 	}
 	
 	void Start()
@@ -25,16 +26,10 @@ public class PlayerController : MonoBehaviour
 
 	void Move()
 	{
-		direction = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+		//movement
+		Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
 
-		Vector3 camForward = Camera.main.transform.forward;
-		camForward.y = 0.0f;
-		camForward = camForward.normalized;
-		Vector3 camRight = Camera.main.transform.right;
-		camRight.y = 0.0f;
-		camRight = camRight.normalized;
-
-		direction = (direction.x * camRight + direction.z * camForward);
+		direction = ToCameraSpace(direction);
 
 		if (direction.magnitude >= 0.01f && direction.magnitude <= 0.2f)
 		{
@@ -43,10 +38,36 @@ public class PlayerController : MonoBehaviour
 
 		Vector3 velocity = direction * speed * Time.deltaTime;
 
-		rb.MovePosition(transform.position + velocity);
-		transform.LookAt(transform.position + direction);
-		transform.localEulerAngles = new Vector3(0.0f, transform.localEulerAngles.y, 0.0f);
+		//gravity effect
+		if (controller.isGrounded)
+			fallVelocity = Vector3.zero;
+		else
+			fallVelocity.y += gravity * Time.deltaTime * Time.deltaTime;
 
-		Debug.Log(rb.velocity.magnitude);
+		velocity += fallVelocity;
+
+		//move
+		controller.Move(velocity);
+
+		//aim
+		Vector3 aimDirection = new Vector3(Input.GetAxis("AimHorizontal"), 0.0f, Input.GetAxis("AimVertical"));
+		aimDirection = ToCameraSpace(aimDirection);
+		Debug.Log(aimDirection);
+
+		transform.LookAt(transform.position + aimDirection);
+		transform.localEulerAngles = new Vector3(0.0f, transform.localEulerAngles.y, 0.0f);
+	}
+
+	Vector3 ToCameraSpace(Vector3 playerSpace)
+	{
+		Vector3 camForward = Camera.main.transform.forward;
+		camForward.y = 0.0f;
+		camForward = camForward.normalized;
+
+		Vector3 camRight = Camera.main.transform.right;
+		camRight.y = 0.0f;
+		camRight = camRight.normalized;
+
+		return playerSpace.x * camRight + playerSpace.z * camForward;
 	}
 }
