@@ -79,29 +79,6 @@ public class PlayerController : MonoBehaviour
 		controller.Move(fallVelocity);
 	}
 
-	void Fall()
-	{
-
-	}
-
-	void CheckGround()
-	{
-		Debug.Log(controller.bounds);
-		if (controller.isGrounded)
-		{
-			isGrounded = true;
-		}
-		else
-		{
-
-		}
-	}
-
-	void Fall()
-	{
-
-	}
-
 	void Aim()
 	{
 		Vector3 aimDirection = new Vector3(Input.GetAxis("AimHorizontal"), 0.0f, Input.GetAxis("AimVertical"));
