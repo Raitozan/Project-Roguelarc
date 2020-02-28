@@ -6,12 +6,15 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
 	public float gravity;
-	public Vector3 fallVelocity;
+	Vector3 fallVelocity;
+
 	CharacterController controller;
+	GameObject playerModel;
 
 	private void Awake()
 	{
 		controller = GetComponent<CharacterController>();
+		playerModel = transform.GetChild(0).gameObject;
 	}
 	
 	void Start()
@@ -22,6 +25,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 		Move();
+		Aim();
     }
 
 	void Move()
@@ -48,14 +52,16 @@ public class PlayerController : MonoBehaviour
 
 		//move
 		controller.Move(velocity);
+	}
 
-		//aim
+	void Aim()
+	{
 		Vector3 aimDirection = new Vector3(Input.GetAxis("AimHorizontal"), 0.0f, Input.GetAxis("AimVertical"));
 		aimDirection = ToCameraSpace(aimDirection);
 		Debug.Log(aimDirection);
 
-		transform.LookAt(transform.position + aimDirection);
-		transform.localEulerAngles = new Vector3(0.0f, transform.localEulerAngles.y, 0.0f);
+		playerModel.transform.LookAt(playerModel.transform.position + aimDirection);
+		playerModel.transform.localEulerAngles = new Vector3(0.0f, playerModel.transform.localEulerAngles.y, 0.0f);
 	}
 
 	Vector3 ToCameraSpace(Vector3 playerSpace)
