@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
 	public float gravity;
 	Vector3 fallVelocity;
 
+	bool isGrounded;
+	LayerMask groundMask;
+
 	CharacterController controller;
 	GameObject playerModel;
 
@@ -25,12 +28,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 		Move();
+		CheckGround();
+		Fall();
 		Aim();
     }
 
 	void Move()
 	{
-		//movement
 		Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
 
 		direction = ToCameraSpace(direction);
@@ -41,24 +45,44 @@ public class PlayerController : MonoBehaviour
 		}
 
 		Vector3 velocity = direction * speed * Time.deltaTime;
+		controller.Move(velocity);
+	}
 
-		//gravity effect
+	void CheckGround()
+	{
 		if (controller.isGrounded)
+		{
+			isGrounded = true;
+		}
+		else
+		{
+			RaycastHit hit;
+			if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.1f, groundMask))
+			{
+				controller.Move(Vector3.down * hit.distance);
+				isGrounded = true;
+			}
+			else
+			{
+				isGrounded = false;
+			}
+		}
+	}
+
+	void Fall()
+	{
+		if (isGrounded)
 			fallVelocity = Vector3.zero;
 		else
 			fallVelocity.y += gravity * Time.deltaTime * Time.deltaTime;
 
-		velocity += fallVelocity;
-
-		//move
-		controller.Move(velocity);
+		controller.Move(fallVelocity);
 	}
 
 	void Aim()
 	{
 		Vector3 aimDirection = new Vector3(Input.GetAxis("AimHorizontal"), 0.0f, Input.GetAxis("AimVertical"));
 		aimDirection = ToCameraSpace(aimDirection);
-		Debug.Log(aimDirection);
 
 		playerModel.transform.LookAt(playerModel.transform.position + aimDirection);
 		playerModel.transform.localEulerAngles = new Vector3(0.0f, playerModel.transform.localEulerAngles.y, 0.0f);
