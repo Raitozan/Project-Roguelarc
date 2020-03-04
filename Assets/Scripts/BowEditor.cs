@@ -9,13 +9,13 @@ public class BowEditor : MonoBehaviour
 
 	public float attackSpeed;
 
-	public float projectileSpeed;
+	public float arrowSpeed;
 
 	private void OnValidate()
 	{
 		BowParameters.damageType = damageType;
 		BowParameters.damageAmount = damageAmount;
 		BowParameters.attackSpeed = attackSpeed;
-		BowParameters.projectileSpeed = projectileSpeed;
+		BowParameters.arrowSpeed = arrowSpeed;
 	}
 }

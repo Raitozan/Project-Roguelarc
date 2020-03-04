@@ -80,6 +80,8 @@ public class PlayerController : MonoBehaviour
 		Vector3 aimDirection = new Vector3(Input.GetAxis("AimHorizontal"), 0.0f, Input.GetAxis("AimVertical"));
 		aimDirection = ToCameraSpace(aimDirection);
 
+		Debug.DrawRay(transform.position, aimDirection*10, Color.red, 0.1f);
+
 		playerModel.transform.LookAt(playerModel.transform.position + aimDirection);
 		playerModel.transform.localEulerAngles = new Vector3(0.0f, playerModel.transform.localEulerAngles.y, 0.0f);
 	}

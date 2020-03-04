@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BasicAttack : MonoBehaviour
 {
-	public GameObject projectile;
+	public GameObject arrow;
+	public Transform startPoint;
 	bool canShoot;
 
 	void Start()
@@ -24,7 +25,7 @@ public class BasicAttack : MonoBehaviour
 
 	IEnumerator ShootCoroutine()
 	{
-		Debug.Log("pew");
+		Instantiate(arrow, startPoint.position, startPoint.rotation);
 		yield return new WaitForSeconds(BowParameters.attackSpeed);
 		canShoot = true;
 	}

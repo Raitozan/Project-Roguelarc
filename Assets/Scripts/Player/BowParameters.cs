@@ -9,7 +9,7 @@ public static class BowParameters
 {
 	public static DamageType damageType;
 	public static int damageAmount;
-	public static float projectileSpeed;
+	public static float arrowSpeed;
 
 	public static float attackSpeed;
 
@@ -22,5 +22,6 @@ public static class BowParameters
 	 * homing shot
 	 * big arrows (but slower)
 	 * charging shot
+	 * fragmenting shot
 	*/
 }
