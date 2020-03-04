@@ -18,12 +18,8 @@ public class PlayerController : MonoBehaviour
 	{
 		controller = GetComponent<CharacterController>();
 		playerModel = transform.GetChild(0).gameObject;
+		groundMask = LayerMask.NameToLayer("Ground");
 	}
-	
-	void Start()
-    {
-        
-    }
 	
     void Update()
     {
