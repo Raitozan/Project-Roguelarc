@@ -1347,6 +1347,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3506308586039077837, guid: a3a82eeb5cb82ce4f91136a8c48af2bd,
+        type: 3}
+      propertyPath: attackSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3506308586039077839, guid: a3a82eeb5cb82ce4f91136a8c48af2bd,
         type: 3}
       propertyPath: m_Name
@@ -1519,6 +1524,16 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1334661001}
+    - target: {fileID: 2481104326693821282, guid: c560e525f2d4b7c45a98e90ecc436a59,
+        type: 3}
+      propertyPath: m_FollowOffset.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481104326693821282, guid: c560e525f2d4b7c45a98e90ecc436a59,
+        type: 3}
+      propertyPath: m_FollowOffset.z
+      value: -30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c560e525f2d4b7c45a98e90ecc436a59, type: 3}
 --- !u!1001 &5201021913480853392
@@ -1651,6 +1666,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676410110399016809, guid: 16b47b7b7d72abe4c973597877a09a0a,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676410110399016809, guid: 16b47b7b7d72abe4c973597877a09a0a,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676410110399016809, guid: 16b47b7b7d72abe4c973597877a09a0a,
+        type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676410110399016809, guid: 16b47b7b7d72abe4c973597877a09a0a,
+        type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676410110399016809, guid: 16b47b7b7d72abe4c973597877a09a0a,
+        type: 3}
+      propertyPath: m_FocalLength
+      value: 32.96973
       objectReference: {fileID: 0}
     - target: {fileID: 6676410110399016823, guid: 16b47b7b7d72abe4c973597877a09a0a,
         type: 3}
