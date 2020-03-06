@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageType: 0
   damageAmount: 10
-  attackSpeed: 0.5
+  attackSpeed: 0.25
   arrowSpeed: 75
