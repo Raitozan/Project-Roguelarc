@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BowEditor : MonoBehaviour
 {
-	public DamageType damageType;
-	public int damageAmount;
+	public DamageInfo damage;
 
 	public float attackSpeed;
 
@@ -13,8 +12,7 @@ public class BowEditor : MonoBehaviour
 
 	private void OnValidate()
 	{
-		BowParameters.damageType = damageType;
-		BowParameters.damageAmount = damageAmount;
+		BowParameters.damage = damage;
 		BowParameters.attackSpeed = attackSpeed;
 		BowParameters.arrowSpeed = arrowSpeed;
 	}

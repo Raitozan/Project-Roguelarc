@@ -28,24 +28,24 @@ public class Arrow : MonoBehaviour
 			Vector3 toNewPos = transform.position - previousPos;
 			RaycastHit hit;
 			if (Physics.Raycast(previousPos, toNewPos.normalized, out hit, toNewPos.magnitude, hitmask))
+			{
 				HandleCollision(hit.collider);
+			}
 			else if ((lifetime -= Time.deltaTime) <= 0.0f)
-				StartCoroutine(DestroyCoroutine());
+			{
+				speed = 0.0f;
+				Destroy(gameObject, 0.1f);
+			}
 		}
 	}
 
 	void HandleCollision(Collider other)
 	{
-		if(other.CompareTag("Enemy"))
-			Debug.Log("Aïe !");
+		if(other.CompareTag("Destroyable") || other.CompareTag("Enemy"))
+			other.GetComponent<Destroyable>().TakeDamage(BowParameters.damage);
 
-		StartCoroutine(DestroyCoroutine());
-	}
-
-	IEnumerator DestroyCoroutine()
-	{
 		speed = 0.0f;
-		yield return new WaitForSeconds(0.1f);
-		Destroy(gameObject);
+		Destroy(gameObject, 0.1f);
 	}
+
 }

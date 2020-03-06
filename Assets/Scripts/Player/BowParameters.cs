@@ -2,21 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DamageType {Direct}; //Dot ? AoE ?
-
-
 public static class BowParameters
 {
-	public static DamageType damageType;
-	public static int damageAmount;
-	public static float arrowSpeed;
+	//damage
+	public static DamageInfo damage;
 
+	//attributes
 	public static float attackSpeed;
 
-	/*ideas:
+	//projectile
+	public static float arrowSpeed;
+
+	/*====effect ideas====:
 	 * cross wall
-	 * dot duration
-	 * aoe range
 	 * magnetic effect (ennemies attracted on impact)
 	 * multi shot (2 diagonal and the central)
 	 * homing shot
