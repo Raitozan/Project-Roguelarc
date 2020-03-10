@@ -41,8 +41,8 @@ public class Arrow : MonoBehaviour
 
 	void HandleCollision(Collider other)
 	{
-		if(other.CompareTag("Destroyable") || other.CompareTag("Enemy"))
-			other.GetComponent<Destroyable>().TakeDamage(BowParameters.damage);
+		if(other.CompareTag("Destructible") || other.CompareTag("Enemy"))
+			other.GetComponent<Destructible>().TakeDamage(BowParameters.damage);
 
 		speed = 0.0f;
 		Destroy(gameObject, 0.1f);
