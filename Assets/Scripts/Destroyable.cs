@@ -18,6 +18,7 @@ public class Destroyable : MonoBehaviour
 	public int healthPoints;
 
 	public bool showDamagePopup;
+	public GameObject damagePopup;
 
 	public void TakeDamage(DamageInfo dmg)
 	{
@@ -25,6 +26,8 @@ public class Destroyable : MonoBehaviour
 		{
 			case DamageType.Direct:
 				healthPoints -= dmg.damageAmount;
+				if (showDamagePopup)
+					Instantiate(damagePopup, transform.position + new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity).GetComponent<DamagePopup>().Launch(dmg.damageAmount);
 				break;
 			case DamageType.DOT:
 				break;
