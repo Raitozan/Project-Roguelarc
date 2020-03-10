@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		controller = GetComponent<CharacterController>();
-		playerModel = transform.GetChild(0).gameObject;
+		playerModel = transform.Find("Model").gameObject;
 		groundMask = LayerMask.NameToLayer("Ground");
 	}
 	
