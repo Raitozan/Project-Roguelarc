@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class CrosshairController : MonoBehaviour
 {
+	GameObject player;
+	Vector3 previousPlayerPos;
+
+	public GameObject midPoint;
+
 	public float speed;
+	public float maxDistance;
+
 	public float gravity;
 	Vector3 fallVelocity;
 
@@ -12,32 +19,39 @@ public class PlayerController : MonoBehaviour
 	LayerMask groundMask;
 
 	CharacterController controller;
-	GameObject playerModel;
-	GameObject crosshair;
 
 	private void Awake()
 	{
 		controller = GetComponent<CharacterController>();
-		playerModel = transform.Find("Model").gameObject;
 		groundMask = LayerMask.NameToLayer("Ground");
 	}
 
 	private void Start()
 	{
-		crosshair = GameManager.manager.crosshair;
+		player = GameManager.manager.player;
+		previousPlayerPos = player.transform.position;
 	}
 
 	void Update()
-    {
+	{
+		MimicPlayer();
 		Move();
 		CheckGround();
 		Fall();
-		Aim();
-    }
+
+		midPoint.transform.position = player.transform.position + ((transform.position - player.transform.position) / 2.0f);
+	}
+
+	void MimicPlayer()
+	{
+		Vector3 playerMovement = player.transform.position - previousPlayerPos;
+		controller.Move(playerMovement);
+		previousPlayerPos = player.transform.position;
+	}
 
 	void Move()
 	{
-		Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+		Vector3 direction = new Vector3(Input.GetAxis("AimHorizontal"), 0.0f, Input.GetAxis("AimVertical"));
 
 		direction = ToCameraSpace(direction);
 
@@ -47,7 +61,19 @@ public class PlayerController : MonoBehaviour
 		}
 
 		Vector3 velocity = direction * speed * Time.deltaTime;
+		CheckDistance(ref velocity);
+
 		controller.Move(velocity);
+	}
+
+	void CheckDistance(ref Vector3 velocity)
+	{
+		if(Vector3.Distance(player.transform.position, transform.position + velocity) > maxDistance)
+		{
+			Vector3 toCrosshair = (transform.position - player.transform.position).normalized;
+			Vector3 fixedPos = player.transform.position + toCrosshair * maxDistance;
+			velocity = fixedPos - transform.position;
+		}
 	}
 
 	void CheckGround()
@@ -79,12 +105,6 @@ public class PlayerController : MonoBehaviour
 			fallVelocity.y += gravity * Time.deltaTime * Time.deltaTime;
 
 		controller.Move(fallVelocity);
-	}
-
-	void Aim()
-	{
-		playerModel.transform.LookAt(crosshair.transform.position);
-		playerModel.transform.localEulerAngles = new Vector3(0.0f, playerModel.transform.localEulerAngles.y, 0.0f);
 	}
 
 	Vector3 ToCameraSpace(Vector3 playerSpace)

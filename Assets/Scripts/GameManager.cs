@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager manager; 
+    public static GameManager manager;
+
+	public GameObject player;
+	public GameObject crosshair;
 
     void Awake()
     {
@@ -16,11 +19,5 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
 	}
-    
-    void Update()
-    {
-        
-    }
 }

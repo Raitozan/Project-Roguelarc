@@ -162,4 +162,4 @@ MonoBehaviour:
   lifetime: 0.25
   hitmask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 311
